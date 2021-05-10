@@ -182,7 +182,7 @@ public class TicTacToeAcceptanceTests {
 
         public void checkIsWinner() throws IOException {
             assertThat(runner.processOut.readLine())
-                    .isEqualTo(String.format("Player %s wins.", playerNo));
+                    .isEqualTo(String.format("Player %s is the winner.", playerNo));
         }
     }
 }
