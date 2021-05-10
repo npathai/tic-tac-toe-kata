@@ -37,7 +37,7 @@ public class GameView {
         console.write("---+---+---");
         printRow(board[2]);
 
-        if(game.isOver()) {
+        if (game.isOver()) {
             console.write(String.format("Player %s is the winner.", gameState.winnerPlayer().number()));
         }
 

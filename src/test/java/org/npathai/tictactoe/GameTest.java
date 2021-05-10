@@ -102,4 +102,26 @@ public class GameTest {
         GameState state = game.state();
         assertThat(state.winnerPlayer()).isEqualTo(playerOne);
     }
+
+    @Test
+    public void isOverWhenAnyColumnIsFullWithSamePlayersMark() {
+        game.update(1);
+        assertThat(game.isOver()).isFalse();
+
+        game.update(9);
+        assertThat(game.isOver()).isFalse();
+
+        game.update(4);
+        assertThat(game.isOver()).isFalse();
+
+        game.update(8);
+        assertThat(game.isOver()).isFalse();
+
+        game.update(7);
+
+        assertThat(game.isOver()).isTrue();
+        // This can be broken down in nested classes testing
+        GameState state = game.state();
+        assertThat(state.winnerPlayer()).isEqualTo(playerOne);
+    }
 }

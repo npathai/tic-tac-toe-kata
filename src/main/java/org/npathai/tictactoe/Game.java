@@ -15,7 +15,7 @@ public class Game {
         this.playerTwo = new Player(2, playerOneMark.equals("O") ? "X": "O");
         this.currentPlayer = playerOne;
 
-        this.board = new char[][]{
+        this.board = new char[][] {
                 {' ', ' ', ' '},
                 {' ', ' ', ' '},
                 {' ', ' ', ' '}
@@ -33,6 +33,22 @@ public class Game {
                     && boardRow[0] == boardRow[1]
                     && boardRow[0] == boardRow[2]) {
                 winnerPlayer = lastPlayer;
+            }
+        }
+
+        boolean isColumnMarked;
+        for (int col = 0; col < board.length; col++) {
+            isColumnMarked = true;
+            for (int row = 0; row < board.length; row++) {
+                if (board[row][col] != lastPlayer.mark().charAt(0)) {
+                    isColumnMarked = false;
+                    break;
+                }
+            }
+
+            if (isColumnMarked) {
+                winnerPlayer = lastPlayer;
+                break;
             }
         }
     }
