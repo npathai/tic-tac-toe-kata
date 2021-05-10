@@ -34,7 +34,7 @@ public class TicTacToe {
 
     public static void main(String[] args) {
         Console console = new Console();
-        Game game = new Game();
+        Game game = new Game(new Board());
         GameView gameView = new GameView(console, game);
         TicTacToe ticTacToe = new TicTacToe(console, game, gameView);
         ticTacToe.start();
