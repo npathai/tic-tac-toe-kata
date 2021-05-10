@@ -1,6 +1,7 @@
 package org.npathai.tictactoe;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -97,18 +98,77 @@ public class TicTacToeAcceptanceTests {
         ticTacToeRunner.checkGameIsOver();
     }
 
-//    @Test
-//    public void whenPlayerIsAbleToSelectFullColumnThenPlayerWinsAndGameIsOver() throws IOException {
-//        ticTacToeRunner.checkInstructionsVisible();
-//        ticTacToeRunner.checkPlayerOneAskedToChooseMark();
-//        ticTacToeRunner.checkNoMoreOutput();
-//
-//        ticTacToeRunner.send("O");
-//
-//        ticTacToeRunner.checkEmptyBoardVisibleWithCurrentPlayerAsPlayerOneAndMark("O");
-//
-//        ticTacToeRunner.send("1");
-//    }
+    @Test
+    public void whenPlayerIsAbleToSelectFullColumnThenPlayerWinsAndGameIsOver() throws IOException {
+        ticTacToeRunner.checkInstructionsVisible();
+        ticTacToeRunner.checkPlayerOneAskedToChooseMark();
+        ticTacToeRunner.checkNoMoreOutput();
+
+        PlayerMoves playerOne = new PlayerMoves(ticTacToeRunner, "X", 1);
+        PlayerMoves playerTwo = new PlayerMoves(ticTacToeRunner, "O", 2);
+
+        playerOne.selectsMark();
+
+        ticTacToeRunner.checkDisplaysBoard(new char[] {
+                ' ', ' ', ' ',
+                ' ', ' ', ' ',
+                ' ', ' ', ' '
+        });
+
+        playerOne.checkIsCurrentPlayer();
+
+        playerOne.selectsCell("1");
+
+        ticTacToeRunner.checkDisplaysBoard(new char[] {
+                playerOne.playerMark.charAt(0), ' ', ' ',
+                ' ', ' ', ' ',
+                ' ', ' ', ' '
+        });
+
+        playerTwo.checkIsCurrentPlayer();
+
+        playerTwo.selectsCell("9");
+
+        ticTacToeRunner.checkDisplaysBoard(new char[] {
+                playerOne.playerMark.charAt(0), ' ', ' ',
+                ' ', ' ', ' ',
+                ' ', ' ', playerTwo.playerMark.charAt(0)
+        });
+
+        playerOne.checkIsCurrentPlayer();
+
+        playerOne.selectsCell("4");
+
+        ticTacToeRunner.checkDisplaysBoard(new char[] {
+                playerOne.playerMark.charAt(0), ' ', ' ',
+                playerOne.playerMark.charAt(0), ' ', ' ',
+                ' ', ' ', playerTwo.playerMark.charAt(0)
+        });
+
+        playerTwo.checkIsCurrentPlayer();
+
+        playerTwo.selectsCell("5");
+
+        ticTacToeRunner.checkDisplaysBoard(new char[] {
+                playerOne.playerMark.charAt(0), ' ', ' ',
+                playerOne.playerMark.charAt(0), playerTwo.playerMark.charAt(0), ' ',
+                ' ', ' ', playerTwo.playerMark.charAt(0)
+        });
+
+        playerOne.checkIsCurrentPlayer();
+
+        playerOne.selectsCell("7");
+
+        ticTacToeRunner.checkDisplaysBoard(new char[] {
+                playerOne.playerMark.charAt(0), ' ', ' ',
+                playerOne.playerMark.charAt(0), playerTwo.playerMark.charAt(0), ' ',
+                playerOne.playerMark.charAt(0), ' ', playerTwo.playerMark.charAt(0)
+        });
+
+        playerOne.checkIsWinner();
+
+        ticTacToeRunner.checkGameIsOver();
+    }
 
     class TicTacToeRunner {
 
