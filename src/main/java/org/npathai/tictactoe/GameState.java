@@ -15,12 +15,12 @@ public class GameState {
         this.winnerPlayer = winnerPlayer;
     }
 
-    public Player nextPlayer() {
+    public Player currentPlayer() {
         return nextPlayer;
     }
 
 
-    public Player currentPlayer() {
+    public Player lastPlayer() {
         return currentPlayer;
     }
 

@@ -1,7 +1,8 @@
 package org.npathai.tictactoe;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,17 +21,22 @@ public class TicTacToeAcceptanceTests {
         ticTacToeRunner.start();
     }
 
-    @Test
-    public void whenPlayerIsAbleToSelectFullRowThenPlayerWinsAndGameIsOver() throws IOException {
+    @ParameterizedTest
+    @CsvSource({
+            "X,O",
+            "O,X"
+    })
+    public void whenPlayerIsAbleToSelectFullRowThenPlayerWinsAndGameIsOver(String playerOneMark, String playerTwoMark) throws IOException {
         ticTacToeRunner.checkInstructionsVisible();
         ticTacToeRunner.checkPlayerOneAskedToChooseMark();
         ticTacToeRunner.checkNoMoreOutput();
 
-        PlayerMoves playerOne = new PlayerMoves(ticTacToeRunner, "O", 1);
-        playerOne.selectsMark();
-        PlayerMoves playerTwo = new PlayerMoves(ticTacToeRunner, "X", 2);
+        PlayerMoves playerOne = new PlayerMoves(ticTacToeRunner, playerOneMark, 1);
+        PlayerMoves playerTwo = new PlayerMoves(ticTacToeRunner, playerTwoMark, 2);
 
-        ticTacToeRunner.checkBoard(new char[] {
+        playerOne.selectsMark();
+
+        ticTacToeRunner.checkDisplaysBoard(new char[] {
                 ' ', ' ', ' ',
                 ' ', ' ', ' ',
                 ' ', ' ', ' '
@@ -40,8 +46,8 @@ public class TicTacToeAcceptanceTests {
 
         playerOne.selectsCell("1");
 
-        ticTacToeRunner.checkBoard(new char[] {
-                'X', ' ', ' ',
+        ticTacToeRunner.checkDisplaysBoard(new char[] {
+                playerOne.playerMark.charAt(0), ' ', ' ',
                 ' ', ' ', ' ',
                 ' ', ' ', ' '
         });
@@ -50,9 +56,9 @@ public class TicTacToeAcceptanceTests {
 
         playerTwo.selectsCell("4");
 
-        ticTacToeRunner.checkBoard(new char[] {
-                'X', ' ', ' ',
-                'O', ' ', ' ',
+        ticTacToeRunner.checkDisplaysBoard(new char[] {
+                playerOne.playerMark.charAt(0), ' ', ' ',
+                playerTwo.playerMark.charAt(0), ' ', ' ',
                 ' ', ' ', ' '
         });
 
@@ -60,9 +66,9 @@ public class TicTacToeAcceptanceTests {
 
         playerOne.selectsCell("2");
 
-        ticTacToeRunner.checkBoard(new char[] {
-                'X', 'X', ' ',
-                'O', ' ', ' ',
+        ticTacToeRunner.checkDisplaysBoard(new char[] {
+                playerOne.playerMark.charAt(0), playerOne.playerMark.charAt(0), ' ',
+                playerTwo.playerMark.charAt(0), ' ', ' ',
                 ' ', ' ', ' '
         });
 
@@ -70,20 +76,20 @@ public class TicTacToeAcceptanceTests {
 
         playerTwo.selectsCell("7");
 
-        ticTacToeRunner.checkBoard(new char[] {
-                'X', 'X', ' ',
-                'O', ' ', ' ',
-                'O', ' ', ' '
+        ticTacToeRunner.checkDisplaysBoard(new char[] {
+                playerOne.playerMark.charAt(0), playerOne.playerMark.charAt(0), ' ',
+                playerTwo.playerMark.charAt(0), ' ', ' ',
+                playerTwo.playerMark.charAt(0), ' ', ' '
         });
 
         playerOne.checkIsCurrentPlayer();
 
         playerOne.selectsCell("3");
 
-        ticTacToeRunner.checkBoard(new char[] {
-                'X', 'X', 'X',
-                'O', ' ', ' ',
-                'O', ' ', ' '
+        ticTacToeRunner.checkDisplaysBoard(new char[] {
+                playerOne.playerMark.charAt(0), playerOne.playerMark.charAt(0), playerOne.playerMark.charAt(0),
+                playerTwo.playerMark.charAt(0), ' ', ' ',
+                playerTwo.playerMark.charAt(0), ' ', ' '
         });
 
         playerOne.checkIsWinner();
@@ -137,7 +143,7 @@ public class TicTacToeAcceptanceTests {
             assertThat(processOut.ready()).isFalse();
         }
 
-        public void checkBoard(char[] values) throws IOException {
+        public void checkDisplaysBoard(char[] values) throws IOException {
             assertThat(processOut.readLine())
                     .isEqualTo(String.format(" %s | %s | %s ", values[0], values[1], values[2]));
             assertThat(processOut.readLine()).isEqualTo("---+---+---");
