@@ -47,6 +47,30 @@ public class Board {
                 return true;
             }
         }
-        return false;
+
+        // Diagonal checks
+        return isPrimaryDiagonalMarked(playerMark) || isSecondaryDiagonalMarked(playerMark);
+    }
+
+    private boolean isPrimaryDiagonalMarked(char playerMark) {
+        boolean isDiagonalMarked = true;
+        for (int i = 0; i < cells.length; i++) {
+            if (cells[i][i] != playerMark) {
+                isDiagonalMarked = false;
+                break;
+            }
+        }
+        return isDiagonalMarked;
+    }
+
+    private boolean isSecondaryDiagonalMarked(char playerMark) {
+        boolean isDiagonalMarked = true;
+        for (int i = 0; i < cells.length; i++) {
+            if (cells[i][cells.length - 1 - i] != playerMark) {
+                isDiagonalMarked = false;
+                break;
+            }
+        }
+        return isDiagonalMarked;
     }
 }

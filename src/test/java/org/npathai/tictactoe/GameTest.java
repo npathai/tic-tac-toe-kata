@@ -26,7 +26,6 @@ public class GameTest {
     private final Player playerOne = new Player(1, "X");
     private final Player playerTwo = new Player(2, "O");
 
-
     @BeforeEach
     public void setUp() {
         game.start(playerOne.mark());
@@ -58,6 +57,7 @@ public class GameTest {
                 .contains(cells[0], atIndex(0))
                 .contains(cells[1], atIndex(1))
                 .contains(cells[2], atIndex(2));
+        verify(mockBoard).getCells();
     }
 
     @ParameterizedTest(name = "When player one has mark {0}, then player two should have mark {1}")
