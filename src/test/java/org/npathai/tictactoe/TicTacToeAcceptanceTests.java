@@ -14,7 +14,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TicTacToeAcceptanceTests {
 
+    public static final char X = 'X';
+    public static final char O = 'O';
     private TicTacToeRunner ticTacToeRunner;
+    private PlayerMoves playerX;
+    private PlayerMoves playerO;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -242,6 +246,116 @@ public class TicTacToeAcceptanceTests {
         ticTacToeRunner.checkGameIsOver();
     }
 
+    @Test
+    public void whenAllCellsAreMarkedAndNoPlayerHasALineThenGameIsOverWithNoWinner() throws IOException {
+        ticTacToeRunner.checkInstructionsVisible();
+        ticTacToeRunner.checkPlayerOneAskedToChooseMark();
+        ticTacToeRunner.checkNoMoreOutput();
+
+        playerX = new PlayerMoves(ticTacToeRunner, String.valueOf(X), 1);
+        playerO = new PlayerMoves(ticTacToeRunner, String.valueOf(O), 2);
+
+        playerX.selectsMark();
+
+        ticTacToeRunner.checkDisplaysBoard(new char[] {
+                ' ', ' ', ' ',
+                ' ', ' ', ' ',
+                ' ', ' ', ' '
+        });
+
+        playerX.checkIsCurrentPlayer();
+
+        playerX.selectsCell("1");
+
+        ticTacToeRunner.checkDisplaysBoard(new char[] {
+                 X , ' ', ' ',
+                ' ', ' ', ' ',
+                ' ', ' ', ' '
+        });
+
+        playerO.checkIsCurrentPlayer();
+
+        playerO.selectsCell("3");
+
+        ticTacToeRunner.checkDisplaysBoard(new char[] {
+                X, ' ', O,
+                ' ', ' ', ' ',
+                ' ', ' ', ' '
+        });
+
+        playerX.checkIsCurrentPlayer();
+
+        playerX.selectsCell("5");
+
+        ticTacToeRunner.checkDisplaysBoard(new char[] {
+                 X , ' ', O ,
+                ' ', X , ' ',
+                ' ', ' ', ' '
+        });
+
+        playerO.checkIsCurrentPlayer();
+
+        playerO.selectsCell("9");
+
+        ticTacToeRunner.checkDisplaysBoard(new char[] {
+                 X , ' ', O ,
+                ' ', X , ' ',
+                ' ', ' ', O
+        });
+
+        playerX.checkIsCurrentPlayer();
+
+        playerX.selectsCell("2");
+
+        ticTacToeRunner.checkDisplaysBoard(new char[] {
+                 X , X , O ,
+                ' ', X , ' ',
+                ' ', ' ', O
+        });
+
+        playerO.checkIsCurrentPlayer();
+
+        playerO.selectsCell("8");
+
+        ticTacToeRunner.checkDisplaysBoard(new char[] {
+                 X , X , O ,
+                ' ', X , ' ',
+                ' ', O , O
+        });
+
+        playerX.checkIsCurrentPlayer();
+
+        playerX.selectsCell("6");
+
+        ticTacToeRunner.checkDisplaysBoard(new char[] {
+                 X , X , O ,
+                ' ', X , X ,
+                ' ', O , O
+        });
+
+        playerO.checkIsCurrentPlayer();
+
+        playerO.selectsCell("4");
+
+        ticTacToeRunner.checkDisplaysBoard(new char[] {
+                X , X , O ,
+                O , X , X ,
+                ' ', O , O
+        });
+
+        playerX.checkIsCurrentPlayer();
+
+        playerX.selectsCell("7");
+
+        ticTacToeRunner.checkDisplaysBoard(new char[] {
+                X , X , O ,
+                O , X , X ,
+                X , O , O
+        });
+
+        ticTacToeRunner.checkGameIsOverWithNoWinner();
+    }
+
     class TicTacToeRunner {
 
         private Process process;
@@ -287,6 +401,12 @@ public class TicTacToeAcceptanceTests {
         }
 
         public void checkGameIsOver() throws IOException {
+            assertThat(processOut.readLine()).isNull();
+            assertThat(process.isAlive()).isFalse();
+        }
+
+        public void checkGameIsOverWithNoWinner() throws IOException {
+            assertThat(processOut.readLine()).isEqualTo("No winner. Game is over.");
             assertThat(processOut.readLine()).isNull();
             assertThat(process.isAlive()).isFalse();
         }
