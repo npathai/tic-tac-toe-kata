@@ -88,7 +88,7 @@ class GameViewTest {
     }
 
     @Test
-    public void displaysBoardWithResultWhenGameIsOver() {
+    public void displaysBoardWithWinnerWhenGameIsOverWithAWinner() {
         Player playerOne = new Player(1, "X");
         Player playerTwo = new Player(2, "O");
 
@@ -111,6 +111,33 @@ class GameViewTest {
         inOrder.verify(mockConsole).write("---+---+---");
         inOrder.verify(mockConsole).write(" X |   | O ");
         verify(mockConsole).write(String.format("Player %s is the winner.", playerOne.number()));
+
+    }
+
+    @Test
+    public void displaysBoardWithoutWinnerWhenGameIsOverNoWinner() {
+        Player playerOne = new Player(1, "X");
+        Player playerTwo = new Player(2, "O");
+
+
+        GameState gameState = new GameState(new char[][]{
+                {'X', ' ', ' '},
+                {' ', 'O', ' '},
+                {'X', ' ', 'O'}
+        }, playerOne, playerTwo, null);
+        when(mockGame.isOver()).thenReturn(true);
+        when(mockGame.state()).thenReturn(gameState);
+
+        gameView.displayGameState();
+
+        InOrder inOrder = Mockito.inOrder(mockGame, mockConsole);
+        inOrder.verify(mockGame).state();
+        inOrder.verify(mockConsole).write(" X |   |   ");
+        inOrder.verify(mockConsole).write("---+---+---");
+        inOrder.verify(mockConsole).write("   | O |   ");
+        inOrder.verify(mockConsole).write("---+---+---");
+        inOrder.verify(mockConsole).write(" X |   | O ");
+        verify(mockConsole).write("No winner. Game is over.");
 
     }
 }

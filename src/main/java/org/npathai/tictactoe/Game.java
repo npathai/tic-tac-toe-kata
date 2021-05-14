@@ -20,7 +20,7 @@ public class Game {
     }
 
     public boolean isOver() {
-        return winnerPlayer != null;
+        return winnerPlayer != null || board.isFull();
     }
 
     private void decideWinner() {

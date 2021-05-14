@@ -3,6 +3,7 @@ package org.npathai.tictactoe;
 public class Board {
 
     private final char[][] cells;
+    private int filledCells;
 
     public Board() {
         this.cells = new char[][]{
@@ -21,6 +22,7 @@ public class Board {
         int row = cellNo / 3;
         int col = cellNo % 3;
         cells[row][col] = playerMark;
+        filledCells++;
     }
 
     public boolean hasLineMarked(char playerMark) {
@@ -72,5 +74,9 @@ public class Board {
             }
         }
         return isDiagonalMarked;
+    }
+
+    public boolean isFull() {
+        return filledCells == 9;
     }
 }

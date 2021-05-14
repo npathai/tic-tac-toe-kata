@@ -12,7 +12,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class TicTacToeGameTest {
+public class TicTacToeTest {
 
     @Mock
     private Console mockConsole;

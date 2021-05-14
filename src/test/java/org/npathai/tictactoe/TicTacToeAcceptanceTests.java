@@ -407,8 +407,7 @@ public class TicTacToeAcceptanceTests {
 
         public void checkGameIsOverWithNoWinner() throws IOException {
             assertThat(processOut.readLine()).isEqualTo("No winner. Game is over.");
-            assertThat(processOut.readLine()).isNull();
-            assertThat(process.isAlive()).isFalse();
+            checkGameIsOver();
         }
     }
 

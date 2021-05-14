@@ -108,6 +108,36 @@ class BoardTest {
         );
     }
 
+    // FIXME There should be a better way to write this test case
+    @Test
+    public void shouldNotBeFullWhenAllCellsAreMarkedWithoutAnyLineSelected() {
+        board.update(1, 'X');
+        board.update(3, 'O');
+        board.update(5, 'X');
+        board.update(9, 'O');
+        board.update(2, 'X');
+        board.update(8, 'O');
+        board.update(6, 'X');
+        board.update(7, 'X');
+
+        assertThat(board.isFull()).isFalse();
+    }
+
+    @Test
+    public void shouldBeFullWhenAllCellsAreMarkedWithoutAnyLineSelected() {
+        board.update(1, 'X');
+        board.update(3, 'O');
+        board.update(5, 'X');
+        board.update(9, 'O');
+        board.update(2, 'X');
+        board.update(8, 'O');
+        board.update(6, 'X');
+        board.update(4, 'O');
+        board.update(7, 'X');
+
+        assertThat(board.isFull()).isTrue();
+    }
+
     static class Mark {
         int cellNo;
         char playerMark;

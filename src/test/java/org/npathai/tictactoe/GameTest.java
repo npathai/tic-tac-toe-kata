@@ -101,6 +101,11 @@ public class GameTest {
     }
 
     @Test
+    public void aNewlyCreatedGameHasNoWinner() {
+        assertThat(game.state().winnerPlayer()).isNull();
+    }
+
+    @Test
     public void isNotOverWhenBoardHasNoLineSelected() {
         when(mockBoard.hasLineMarked('X')).thenReturn(false);
 
@@ -124,5 +129,12 @@ public class GameTest {
         // This can be broken down in nested classes testing
         GameState state = game.state();
         assertThat(state.winnerPlayer()).isEqualTo(playerOne);
+    }
+
+    @Test
+    public void isOverWhenBoardIsFilledWithoutAnyWinner() {
+        when(mockBoard.isFull()).thenReturn(true);
+
+        assertThat(game.isOver()).isTrue();
     }
 }
