@@ -4,9 +4,9 @@ import java.util.Objects;
 
 public class Player {
     private final int playerNo;
-    private final String playerMark;
+    private final char playerMark;
 
-    public Player(int playerNo, String playerMark) {
+    public Player(int playerNo, char playerMark) {
         this.playerNo = playerNo;
         this.playerMark = playerMark;
     }
@@ -24,7 +24,7 @@ public class Player {
         return Objects.hash(playerNo, playerMark);
     }
 
-    public String mark() {
+    public char mark() {
         return playerMark;
     }
 

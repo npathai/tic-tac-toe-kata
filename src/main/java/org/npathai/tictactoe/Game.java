@@ -13,20 +13,20 @@ public class Game {
         this.board = board;
     }
 
-    public void start(String playerOneMark) {
+    public void start(char playerOneMark) {
         this.playerOne = new Player(1, playerOneMark);
-        this.playerTwo = new Player(2, playerOneMark.equals("O") ? "X": "O");
+        this.playerTwo = new Player(2, playerOneMark == 'X' ? 'O': 'X');
         this.currentPlayer = playerOne;
     }
 
     private void decideWinner() {
-        if (board.hasLineMarked(lastPlayer.mark().charAt(0))) {
+        if (board.hasLineMarked(lastPlayer.mark())) {
             winnerPlayer = lastPlayer;
         }
     }
 
     public void update(int cellNo) {
-        board.update(cellNo, currentPlayer.mark().charAt(0));
+        board.update(cellNo, currentPlayer.mark());
         switchPlayer();
         decideWinner();
     }

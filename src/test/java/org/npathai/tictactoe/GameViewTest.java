@@ -1,5 +1,6 @@
 package org.npathai.tictactoe;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InOrder;
@@ -22,6 +23,14 @@ class GameViewTest {
 
     @InjectMocks
     GameView gameView;
+    private Player playerOne;
+    private Player playerTwo;
+
+    @BeforeEach
+    void setUp() {
+        playerOne = new Player(1, 'X');
+        playerTwo = new Player(2, 'O');
+    }
 
     @Test
     public void displaysMessageToAskForPlayersMark() {
@@ -44,9 +53,6 @@ class GameViewTest {
 
     @Test
     public void displaysMessageToAskForNextCellNo() {
-        Player playerOne = new Player(1, "X");
-        Player playerTwo = new Player(2, "O");
-
         GameState gameState = new GameState(new char[][]{
                 {'X', ' ', ' '},
                 {' ', ' ', ' '},
@@ -63,9 +69,6 @@ class GameViewTest {
 
     @Test
     public void displaysBoardOnlyWhenGameIsNotOver() {
-        Player playerOne = new Player(1, "X");
-        Player playerTwo = new Player(2, "O");
-
         GameState gameState = new GameState(new char[][]{
                 {'X', ' ', ' '},
                 {' ', 'O', ' '},
@@ -87,10 +90,6 @@ class GameViewTest {
 
     @Test
     public void displaysBoardWithWinnerWhenGameIsOverWithAWinner() {
-        Player playerOne = new Player(1, "X");
-        Player playerTwo = new Player(2, "O");
-
-
         GameState gameState = new GameState(new char[][]{
                 {'X', ' ', ' '},
                 {' ', 'O', ' '},
@@ -113,10 +112,6 @@ class GameViewTest {
 
     @Test
     public void displaysBoardWithoutWinnerWhenGameIsOverNoWinner() {
-        Player playerOne = new Player(1, "X");
-        Player playerTwo = new Player(2, "O");
-
-
         GameState gameState = new GameState(new char[][]{
                 {'X', ' ', ' '},
                 {' ', 'O', ' '},

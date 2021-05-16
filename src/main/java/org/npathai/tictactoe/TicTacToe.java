@@ -19,7 +19,7 @@ public class TicTacToe {
 
         String playerOneMark = console.read();
 
-        game.start(playerOneMark);
+        game.start(playerOneMark.charAt(0));
 
         gameView.displayGameState();
 

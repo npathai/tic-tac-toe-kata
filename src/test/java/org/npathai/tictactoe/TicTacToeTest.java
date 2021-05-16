@@ -29,6 +29,7 @@ public class TicTacToeTest {
     @Test
     public void displaysInstructionOnStartingTheGame() {
         when(game.state()).thenReturn(gameOverState());
+        when(mockConsole.read()).thenReturn("X");
 
         ticTacToe.start();
 
@@ -51,7 +52,7 @@ public class TicTacToeTest {
         inOrder.verify(gameView).displayInstructions();
         inOrder.verify(gameView).askForPlayerMark();
         inOrder.verify(mockConsole).read();
-        inOrder.verify(game).start(playerOneMark);
+        inOrder.verify(game).start(playerOneMark.charAt(0));
         inOrder.verify(gameView).displayGameState();
         inOrder.verify(game).state();
         inOrder.verify(gameView).askForNextCellNo();

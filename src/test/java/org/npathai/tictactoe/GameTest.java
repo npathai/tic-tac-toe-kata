@@ -23,8 +23,8 @@ public class GameTest {
     @InjectMocks
     private Game game;
 
-    private final Player playerOne = new Player(1, "X");
-    private final Player playerTwo = new Player(2, "O");
+    private final Player playerOne = new Player(1, 'X');
+    private final Player playerTwo = new Player(2, 'O');
 
     @BeforeEach
     public void setUp() {
@@ -65,7 +65,7 @@ public class GameTest {
             "X,O",
             "O,X"
     })
-    public void secondPlayerGetsOppositeMarkOnStart(String playerOneMark, String playerTwoMark) {
+    public void secondPlayerGetsOppositeMarkOnStart(char playerOneMark, char playerTwoMark) {
         game.start(playerOneMark);
 
         game.update(1);
