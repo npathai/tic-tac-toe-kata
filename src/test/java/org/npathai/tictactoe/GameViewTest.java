@@ -71,7 +71,6 @@ class GameViewTest {
                 {' ', 'O', ' '},
                 {'X', ' ', 'O'}
         }, playerOne, playerTwo, playerOne);
-        when(mockGame.isOver()).thenReturn(false);
         when(mockGame.state()).thenReturn(gameState);
 
         gameView.displayGameState();
@@ -83,7 +82,6 @@ class GameViewTest {
         inOrder.verify(mockConsole).write("   | O |   ");
         inOrder.verify(mockConsole).write("---+---+---");
         inOrder.verify(mockConsole).write(" X |   | O ");
-        inOrder.verify(mockGame).isOver();
         inOrder.verifyNoMoreInteractions();
     }
 
@@ -97,8 +95,7 @@ class GameViewTest {
                 {'X', ' ', ' '},
                 {' ', 'O', ' '},
                 {'X', ' ', 'O'}
-        }, playerOne, playerTwo, playerOne);
-        when(mockGame.isOver()).thenReturn(true);
+        }, playerOne, playerTwo, playerOne, true);
         when(mockGame.state()).thenReturn(gameState);
 
         gameView.displayGameState();
@@ -124,8 +121,7 @@ class GameViewTest {
                 {'X', ' ', ' '},
                 {' ', 'O', ' '},
                 {'X', ' ', 'O'}
-        }, playerOne, playerTwo, null);
-        when(mockGame.isOver()).thenReturn(true);
+        }, playerOne, playerTwo, null, true);
         when(mockGame.state()).thenReturn(gameState);
 
         gameView.displayGameState();

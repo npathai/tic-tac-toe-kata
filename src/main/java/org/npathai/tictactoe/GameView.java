@@ -38,7 +38,7 @@ public class GameView {
         printRow(board[2]);
 
         // FIXME How can we avoid adding this logic to view?
-        if (game.isOver()) {
+        if (gameState.isOver()) {
             if (gameState.winnerPlayer() != null) {
                 console.write(String.format("Player %s is the winner.", gameState.winnerPlayer().number()));
             } else {

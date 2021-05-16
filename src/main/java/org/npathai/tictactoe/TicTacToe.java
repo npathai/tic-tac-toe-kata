@@ -24,7 +24,7 @@ public class TicTacToe {
         gameView.displayGameState();
 
         // Game starts and shows current board status till the game is over
-        while (!game.isOver()) {
+        while (!game.state().isOver()) {
             gameView.askForNextCellNo();
             int chosenCell = Integer.parseInt(console.read());
             game.update(chosenCell);

@@ -19,10 +19,6 @@ public class Game {
         this.currentPlayer = playerOne;
     }
 
-    public boolean isOver() {
-        return winnerPlayer != null || board.isFull();
-    }
-
     private void decideWinner() {
         if (board.hasLineMarked(lastPlayer.mark().charAt(0))) {
             winnerPlayer = lastPlayer;
@@ -42,6 +38,6 @@ public class Game {
 
     public GameState state() {
         // FIXME game state should not expose original array, it should expose a copy
-        return new GameState(board.getCells(), lastPlayer, currentPlayer, winnerPlayer);
+        return new GameState(board.getCells(), lastPlayer, currentPlayer, winnerPlayer, winnerPlayer != null || board.isFull());
     }
 }

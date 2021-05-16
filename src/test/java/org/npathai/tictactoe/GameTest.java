@@ -97,7 +97,7 @@ public class GameTest {
 
     @Test
     public void aNewlyCreatedGameIsNotOver() {
-        assertThat(game.isOver()).isFalse();
+        assertThat(game.state().isOver()).isFalse();
     }
 
     @Test
@@ -111,7 +111,7 @@ public class GameTest {
 
         game.update(3);
 
-        assertThat(game.isOver()).isFalse();
+        assertThat(game.state().isOver()).isFalse();
 
         // This can be broken down in nested classes testing
         GameState state = game.state();
@@ -124,7 +124,7 @@ public class GameTest {
 
         game.update(3);
 
-        assertThat(game.isOver()).isTrue();
+        assertThat(game.state().isOver()).isTrue();
 
         // This can be broken down in nested classes testing
         GameState state = game.state();
@@ -135,6 +135,6 @@ public class GameTest {
     public void isOverWhenBoardIsFilledWithoutAnyWinner() {
         when(mockBoard.isFull()).thenReturn(true);
 
-        assertThat(game.isOver()).isTrue();
+        assertThat(game.state().isOver()).isTrue();
     }
 }
