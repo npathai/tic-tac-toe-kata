@@ -17,9 +17,11 @@ public class TicTacToe {
 
         gameView.askForPlayerMark();
 
-        String playerOneMark = console.read();
+        String playerOneMarkChoice = console.read();
 
-        game.start(playerOneMark.charAt(0));
+        PlayerMark playerOneMark = PlayerMark.from(playerOneMarkChoice);
+
+        game.start(playerOneMark);
 
         gameView.displayGameState();
 

@@ -17,18 +17,18 @@ public class Board {
         return cells;
     }
 
-    public void update(int cellNo, char playerMark) {
+    public void update(int cellNo, PlayerMark playerMark) {
         cellNo--;
         int row = cellNo / 3;
         int col = cellNo % 3;
-        cells[row][col] = playerMark;
+        cells[row][col] = playerMark.getMark();
         filledCells++;
     }
 
-    public boolean hasLineMarked(char playerMark) {
+    public boolean hasLineMarked(PlayerMark playerMark) {
         for (int row = 0; row < cells.length; row++) {
             char[] boardRow = cells[row];
-            if (boardRow[0] == playerMark
+            if (boardRow[0] == playerMark.getMark()
                     && boardRow[0] == boardRow[1]
                     && boardRow[0] == boardRow[2]) {
                 return true;
@@ -39,7 +39,7 @@ public class Board {
         for (int col = 0; col < cells.length; col++) {
             isColumnMarked = true;
             for (int row = 0; row < cells.length; row++) {
-                if (cells[row][col] != playerMark) {
+                if (cells[row][col] != playerMark.getMark()) {
                     isColumnMarked = false;
                     break;
                 }
@@ -54,10 +54,10 @@ public class Board {
         return isPrimaryDiagonalMarked(playerMark) || isSecondaryDiagonalMarked(playerMark);
     }
 
-    private boolean isPrimaryDiagonalMarked(char playerMark) {
+    private boolean isPrimaryDiagonalMarked(PlayerMark playerMark) {
         boolean isDiagonalMarked = true;
         for (int i = 0; i < cells.length; i++) {
-            if (cells[i][i] != playerMark) {
+            if (cells[i][i] != playerMark.getMark()) {
                 isDiagonalMarked = false;
                 break;
             }
@@ -65,10 +65,10 @@ public class Board {
         return isDiagonalMarked;
     }
 
-    private boolean isSecondaryDiagonalMarked(char playerMark) {
+    private boolean isSecondaryDiagonalMarked(PlayerMark playerMark) {
         boolean isDiagonalMarked = true;
         for (int i = 0; i < cells.length; i++) {
-            if (cells[i][cells.length - 1 - i] != playerMark) {
+            if (cells[i][cells.length - 1 - i] != playerMark.getMark()) {
                 isDiagonalMarked = false;
                 break;
             }

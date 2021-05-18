@@ -13,6 +13,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.data.Index.atIndex;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.npathai.tictactoe.PlayerMark.O;
+import static org.npathai.tictactoe.PlayerMark.X;
 
 @ExtendWith(MockitoExtension.class)
 public class GameTest {
@@ -23,8 +25,8 @@ public class GameTest {
     @InjectMocks
     private Game game;
 
-    private final Player playerOne = new Player(1, 'X');
-    private final Player playerTwo = new Player(2, 'O');
+    private final Player playerOne = new Player(1, X);
+    private final Player playerTwo = new Player(2, O);
 
     @BeforeEach
     public void setUp() {
@@ -38,10 +40,10 @@ public class GameTest {
         game.update(1);
         game.update(6);
 
-        verify(mockBoard).update(3, 'X');
-        verify(mockBoard).update(5, 'O');
-        verify(mockBoard).update(1, 'X');
-        verify(mockBoard).update(6, 'O');
+        verify(mockBoard).update(3, X);
+        verify(mockBoard).update(5, O);
+        verify(mockBoard).update(1, X);
+        verify(mockBoard).update(6, O);
     }
 
     @Test
@@ -65,7 +67,10 @@ public class GameTest {
             "X,O",
             "O,X"
     })
-    public void secondPlayerGetsOppositeMarkOnStart(char playerOneMark, char playerTwoMark) {
+    public void secondPlayerGetsOppositeMarkOnStart(char playerOneMarkChar, char playerTwoMarkChar) {
+        PlayerMark playerOneMark = PlayerMark.from(String.valueOf(playerOneMarkChar));
+        PlayerMark playerTwoMark = PlayerMark.from(String.valueOf(playerTwoMarkChar));
+
         game.start(playerOneMark);
 
         game.update(1);
@@ -107,7 +112,7 @@ public class GameTest {
 
     @Test
     public void isNotOverWhenBoardHasNoLineSelected() {
-        when(mockBoard.hasLineMarked('X')).thenReturn(false);
+        when(mockBoard.hasLineMarked(X)).thenReturn(false);
 
         game.update(3);
 
@@ -120,7 +125,7 @@ public class GameTest {
 
     @Test
     public void isOverWhenBoardHasAnyLineSelected() {
-        when(mockBoard.hasLineMarked('X')).thenReturn(true);
+        when(mockBoard.hasLineMarked(X)).thenReturn(true);
 
         game.update(3);
 

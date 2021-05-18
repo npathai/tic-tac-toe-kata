@@ -42,8 +42,8 @@ public class TicTacToeTest {
 
     @Test
     public void whileGameIsNotOverAsksNextPlayerForMoveAndUpdateTheGame() {
-        String playerOneMark = "X";
-        when(mockConsole.read()).thenReturn(playerOneMark, "1", "2");
+        PlayerMark playerOneMark = PlayerMark.X;
+        when(mockConsole.read()).thenReturn(String.valueOf(playerOneMark), "1", "2");
         when(game.state()).thenReturn(notOverState(), notOverState(), gameOverState());
 
         ticTacToe.start();
@@ -52,7 +52,7 @@ public class TicTacToeTest {
         inOrder.verify(gameView).displayInstructions();
         inOrder.verify(gameView).askForPlayerMark();
         inOrder.verify(mockConsole).read();
-        inOrder.verify(game).start(playerOneMark.charAt(0));
+        inOrder.verify(game).start(playerOneMark);
         inOrder.verify(gameView).displayGameState();
         inOrder.verify(game).state();
         inOrder.verify(gameView).askForNextCellNo();

@@ -4,11 +4,11 @@ import java.util.Objects;
 
 public class Player {
     private final int playerNo;
-    private final char playerMark;
+    private final PlayerMark mark;
 
-    public Player(int playerNo, char playerMark) {
+    public Player(int playerNo, PlayerMark mark) {
         this.playerNo = playerNo;
-        this.playerMark = playerMark;
+        this.mark = mark;
     }
 
     @Override
@@ -16,16 +16,16 @@ public class Player {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;
-        return playerNo == player.playerNo && Objects.equals(playerMark, player.playerMark);
+        return playerNo == player.playerNo && Objects.equals(mark, player.mark);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(playerNo, playerMark);
+        return Objects.hash(playerNo, mark);
     }
 
-    public char mark() {
-        return playerMark;
+    public PlayerMark mark() {
+        return mark;
     }
 
     public int number() {

@@ -1,5 +1,8 @@
 package org.npathai.tictactoe;
 
+import static org.npathai.tictactoe.PlayerMark.O;
+import static org.npathai.tictactoe.PlayerMark.X;
+
 public class Game {
 
     private final Board board;
@@ -13,9 +16,9 @@ public class Game {
         this.board = board;
     }
 
-    public void start(char playerOneMark) {
+    public void start(PlayerMark playerOneMark) {
         this.playerOne = new Player(1, playerOneMark);
-        this.playerTwo = new Player(2, playerOneMark == 'X' ? 'O': 'X');
+        this.playerTwo = new Player(2, playerOneMark == X ? O: X);
         this.currentPlayer = playerOne;
     }
 

@@ -124,7 +124,7 @@ public class TicTacToeAcceptanceTests {
         playerOne.selectsCell("1");
 
         ticTacToeRunner.checkDisplaysBoard(new char[] {
-                playerOne.playerMark.charAt(0), ' ', ' ',
+                 X , ' ', ' ',
                 ' ', ' ', ' ',
                 ' ', ' ', ' '
         });
@@ -134,9 +134,9 @@ public class TicTacToeAcceptanceTests {
         playerTwo.selectsCell("9");
 
         ticTacToeRunner.checkDisplaysBoard(new char[] {
-                playerOne.playerMark.charAt(0), ' ', ' ',
+                 X , ' ', ' ',
                 ' ', ' ', ' ',
-                ' ', ' ', playerTwo.playerMark.charAt(0)
+                ' ', ' ', O
         });
 
         playerOne.checkIsCurrentPlayer();
@@ -144,9 +144,9 @@ public class TicTacToeAcceptanceTests {
         playerOne.selectsCell("4");
 
         ticTacToeRunner.checkDisplaysBoard(new char[] {
-                playerOne.playerMark.charAt(0), ' ', ' ',
-                playerOne.playerMark.charAt(0), ' ', ' ',
-                ' ', ' ', playerTwo.playerMark.charAt(0)
+                 X , ' ', ' ',
+                 X , ' ', ' ',
+                ' ', ' ', O
         });
 
         playerTwo.checkIsCurrentPlayer();
@@ -154,9 +154,9 @@ public class TicTacToeAcceptanceTests {
         playerTwo.selectsCell("5");
 
         ticTacToeRunner.checkDisplaysBoard(new char[] {
-                playerOne.playerMark.charAt(0), ' ', ' ',
-                playerOne.playerMark.charAt(0), playerTwo.playerMark.charAt(0), ' ',
-                ' ', ' ', playerTwo.playerMark.charAt(0)
+                 X , ' ', ' ',
+                 X , O , ' ',
+                ' ', ' ', O
         });
 
         playerOne.checkIsCurrentPlayer();
@@ -164,9 +164,9 @@ public class TicTacToeAcceptanceTests {
         playerOne.selectsCell("7");
 
         ticTacToeRunner.checkDisplaysBoard(new char[] {
-                playerOne.playerMark.charAt(0), ' ', ' ',
-                playerOne.playerMark.charAt(0), playerTwo.playerMark.charAt(0), ' ',
-                playerOne.playerMark.charAt(0), ' ', playerTwo.playerMark.charAt(0)
+                X , ' ', ' ',
+                X , O , ' ',
+                X , ' ', O
         });
 
         playerOne.checkIsWinner();

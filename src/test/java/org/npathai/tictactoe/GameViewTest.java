@@ -11,6 +11,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.npathai.tictactoe.PlayerMark.O;
+import static org.npathai.tictactoe.PlayerMark.X;
 
 @ExtendWith(MockitoExtension.class)
 class GameViewTest {
@@ -28,8 +30,8 @@ class GameViewTest {
 
     @BeforeEach
     void setUp() {
-        playerOne = new Player(1, 'X');
-        playerTwo = new Player(2, 'O');
+        playerOne = new Player(1, X);
+        playerTwo = new Player(2, O);
     }
 
     @Test
