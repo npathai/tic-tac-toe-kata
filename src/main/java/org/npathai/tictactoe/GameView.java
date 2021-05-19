@@ -2,11 +2,9 @@ package org.npathai.tictactoe;
 
 public class GameView {
     private final Console console;
-    private final Game game;
 
-    public GameView(Console console, Game game) {
+    public GameView(Console console) {
         this.console = console;
-        this.game = game;
     }
     public void displayInstructions() {
         console.write(" 1 | 2 | 3 ");
@@ -20,15 +18,12 @@ public class GameView {
         console.write("Player one choose your mark [X or O] >> ");
     }
 
-    public void askForNextCellNo() {
-        GameState state = game.state();
-        Player nextPlayer = state.currentPlayer();
+    public void askForNextCellNo(Player nextPlayer) {
         console.write(String.format("Player %s's turn. "
                 + "To place %s on the board, enter cell number >> ", nextPlayer.number(), nextPlayer.mark()));
     }
 
-    public void displayGameState() {
-        GameState gameState = game.state();
+    public void displayGameState(GameState gameState) {
         char[][] board = gameState.board();
 
         printRow(board[0]);

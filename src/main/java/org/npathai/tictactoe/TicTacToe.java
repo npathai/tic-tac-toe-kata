@@ -12,6 +12,12 @@ public class TicTacToe {
         this.gameView = gameView;
     }
 
+    // Move game loop to Game class
+    // Create Player abstraction which will return the move to be made, opens door for future abstractions
+    // Can we experiment with listener mechanism, like GameStateChanged. But will have to think about user input getting
+    // Imagine how would the design be if game was being played online and game state had to be maintained without blocking execution thread
+    // Support for different types of players, StaticStrategic and AI based using Player abstraction
+    // Play with UI if possible
     public void start() {
         gameView.displayInstructions();
 
@@ -22,22 +28,12 @@ public class TicTacToe {
         PlayerMark playerOneMark = PlayerMark.from(playerOneMarkChoice);
 
         game.start(playerOneMark);
-
-        gameView.displayGameState();
-
-        // Game starts and shows current board status till the game is over
-        while (!game.state().isOver()) {
-            gameView.askForNextCellNo();
-            int chosenCell = Integer.parseInt(console.read());
-            game.update(chosenCell);
-            gameView.displayGameState();
-        }
     }
 
     public static void main(String[] args) {
         Console console = new Console();
-        Game game = new Game(new Board());
-        GameView gameView = new GameView(console, game);
+        GameView gameView = new GameView(console);
+        Game game = new Game(new Board(), gameView, console);
         TicTacToe ticTacToe = new TicTacToe(console, game, gameView);
         ticTacToe.start();
     }

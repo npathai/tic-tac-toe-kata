@@ -63,7 +63,7 @@ class GameViewTest {
 
         when(mockGame.state()).thenReturn(gameState);
 
-        gameView.askForNextCellNo();
+        gameView.askForNextCellNo(playerTwo);
 
         verify(mockConsole).write(String.format("Player %s's turn. "
                 + "To place %s on the board, enter cell number >> ", 2, playerTwo.mark()));
@@ -78,7 +78,7 @@ class GameViewTest {
         }, playerOne, playerTwo, playerOne);
         when(mockGame.state()).thenReturn(gameState);
 
-        gameView.displayGameState();
+        gameView.displayGameState(gameState);
 
         InOrder inOrder = Mockito.inOrder(mockGame, mockConsole);
         inOrder.verify(mockGame).state();
@@ -99,7 +99,7 @@ class GameViewTest {
         }, playerOne, playerTwo, playerOne, true);
         when(mockGame.state()).thenReturn(gameState);
 
-        gameView.displayGameState();
+        gameView.displayGameState(gameState);
 
         InOrder inOrder = Mockito.inOrder(mockGame, mockConsole);
         inOrder.verify(mockGame).state();
@@ -121,7 +121,7 @@ class GameViewTest {
         }, playerOne, playerTwo, null, true);
         when(mockGame.state()).thenReturn(gameState);
 
-        gameView.displayGameState();
+        gameView.displayGameState(gameState);
 
         InOrder inOrder = Mockito.inOrder(mockGame, mockConsole);
         inOrder.verify(mockGame).state();

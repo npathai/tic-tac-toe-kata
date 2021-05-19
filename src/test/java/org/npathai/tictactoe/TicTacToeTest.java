@@ -39,35 +39,4 @@ public class TicTacToeTest {
     private GameState gameOverState() {
         return new GameState(null, null, null, null, true);
     }
-
-    @Test
-    public void whileGameIsNotOverAsksNextPlayerForMoveAndUpdateTheGame() {
-        PlayerMark playerOneMark = PlayerMark.X;
-        when(mockConsole.read()).thenReturn(String.valueOf(playerOneMark), "1", "2");
-        when(game.state()).thenReturn(notOverState(), notOverState(), gameOverState());
-
-        ticTacToe.start();
-
-        InOrder inOrder = Mockito.inOrder(game, gameView, mockConsole);
-        inOrder.verify(gameView).displayInstructions();
-        inOrder.verify(gameView).askForPlayerMark();
-        inOrder.verify(mockConsole).read();
-        inOrder.verify(game).start(playerOneMark);
-        inOrder.verify(gameView).displayGameState();
-        inOrder.verify(game).state();
-        inOrder.verify(gameView).askForNextCellNo();
-        inOrder.verify(mockConsole).read();
-        inOrder.verify(game).update(1);
-        inOrder.verify(gameView).displayGameState();
-        inOrder.verify(game).state();
-        inOrder.verify(gameView).askForNextCellNo();
-        inOrder.verify(mockConsole).read();
-        inOrder.verify(game).update(2);
-        inOrder.verify(gameView).displayGameState();
-        inOrder.verify(game).state();
-    }
-
-    private GameState notOverState() {
-        return new GameState(null, null, null, null, false);
-    }
 }
