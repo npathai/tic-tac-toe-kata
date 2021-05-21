@@ -13,6 +13,7 @@ public class Game {
     private Player lastPlayer;
     private Player currentPlayer;
     private Player winnerPlayer;
+    private GameState currentState;
 
     public Game(Board board, GameView gameView, Console console) {
         this.board = board;
@@ -24,15 +25,15 @@ public class Game {
         this.playerOne = new Player(1, playerOneMark);
         this.playerTwo = new Player(2, playerOneMark == X ? O: X);
         this.currentPlayer = playerOne;
-
-        gameView.displayGameState(state());
+        currentState = state();
+        gameView.displayGameState(currentState);
 
         // Game starts and shows current board status till the game is over
-        while (!isOver()) {
+        while (!currentState.isOver()) {
             gameView.askForNextCellNo(currentPlayer);
             int chosenCell = Integer.parseInt(console.read());
             update(chosenCell);
-            gameView.displayGameState(state());
+            gameView.displayGameState(currentState);
         }
     }
 
@@ -42,10 +43,11 @@ public class Game {
         }
     }
 
-    public void update(int cellNo) {
+    private void update(int cellNo) {
         board.update(cellNo, currentPlayer.mark());
         switchPlayer();
         decideWinner();
+        currentState = state();
     }
 
     private void switchPlayer() {

@@ -5,14 +5,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.mockito.InOrder;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.data.Index.atIndex;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.npathai.tictactoe.PlayerMark.O;
@@ -21,11 +19,16 @@ import static org.npathai.tictactoe.PlayerMark.X;
 @ExtendWith(MockitoExtension.class)
 public class GameTest {
 
+    private static final char[][] ANY_CELLS = {{'X'}};
+
     @Mock
     Board mockBoard;
 
     @Mock
     GameView gameView;
+
+    @Captor
+    ArgumentCaptor<GameState> gameStateArgumentCaptor;
 
     @Mock
     Console mockConsole;
@@ -38,8 +41,7 @@ public class GameTest {
 
     @BeforeEach
     public void setUp() {
-        when(mockBoard.isFull()).thenReturn(false, true);
-        game.start(playerOne.mark());
+        when(mockBoard.isFull()).thenReturn(true);
     }
 
     @Test
@@ -153,41 +155,51 @@ public class GameTest {
     }
 
     @Test
-    public void whileGameIsNotOverAsksNextPlayerForMoveAndUpdateTheGame() {
-        PlayerMark playerOneMark = PlayerMark.X;
-        when(mockConsole.read()).thenReturn(String.valueOf(playerOneMark), "1", "2");
-        GameState state1 = notOverState();
-        GameState state2 = notOverState();
-        GameState state3 = gameOverState();
-        when(game.state()).thenReturn(state1, state2, state3);
+    public void whileBoardHasNoLineMarkedAsksNextPlayerForMoveAndUpdateTheView() {
+        when(mockConsole.read()).thenReturn("1", "2");
+        when(mockBoard.isFull()).thenReturn(false, false, false);
+        when(mockBoard.hasLineMarked(any())).thenReturn(false, false, true);
 
-        game.start(playerOneMark);
+        game.start(PlayerMark.X);
 
-        InOrder inOrder = Mockito.inOrder(game, gameView, mockConsole);
-        inOrder.verify(gameView).displayInstructions();
-        inOrder.verify(gameView).askForPlayerMark();
+        InOrder inOrder = Mockito.inOrder(gameView, mockConsole, mockBoard);
+        inOrder.verify(gameView).displayGameState(gameStateArgumentCaptor.capture());
+
+        inOrder.verify(gameView).askForNextCellNo(playerOne);
         inOrder.verify(mockConsole).read();
-        inOrder.verify(game).start(playerOneMark);
-        inOrder.verify(gameView).displayGameState(state1);
-        inOrder.verify(game).state();
-        // FIXME to be improved
-        inOrder.verify(gameView).askForNextCellNo(null);
+        inOrder.verify(mockBoard).update(1, PlayerMark.X);
+        inOrder.verify(gameView).displayGameState(gameStateArgumentCaptor.capture());
+        inOrder.verify(gameView).askForNextCellNo(playerTwo);
         inOrder.verify(mockConsole).read();
-        inOrder.verify(game).update(1);
-        inOrder.verify(gameView).displayGameState(state2);
-        inOrder.verify(game).state();
-        inOrder.verify(gameView).askForNextCellNo(null);
-        inOrder.verify(mockConsole).read();
-        inOrder.verify(game).update(2);
-        inOrder.verify(gameView).displayGameState(state3);
-        inOrder.verify(game).state();
+        inOrder.verify(mockBoard).update(2, PlayerMark.O);
+        inOrder.verify(gameView).displayGameState(gameStateArgumentCaptor.capture());
     }
 
-    private GameState notOverState() {
-        return new GameState(null, null, null, null, false);
+    @Test
+    public void whileBoardIsNotFullAsksNextPlayerForMoveAndUpdateTheView() {
+        when(mockConsole.read()).thenReturn("1", "2");
+        when(mockBoard.isFull()).thenReturn(false, false, true);
+
+        game.start(PlayerMark.X);
+
+        InOrder inOrder = Mockito.inOrder(gameView, mockConsole, mockBoard);
+        inOrder.verify(gameView).displayGameState(gameStateArgumentCaptor.capture());
+
+        inOrder.verify(gameView).askForNextCellNo(playerOne);
+        inOrder.verify(mockConsole).read();
+        inOrder.verify(mockBoard).update(1, PlayerMark.X);
+        inOrder.verify(gameView).displayGameState(gameStateArgumentCaptor.capture());
+        inOrder.verify(gameView).askForNextCellNo(playerTwo);
+        inOrder.verify(mockConsole).read();
+        inOrder.verify(mockBoard).update(2, PlayerMark.O);
+        inOrder.verify(gameView).displayGameState(gameStateArgumentCaptor.capture());
     }
 
-    private GameState gameOverState() {
-        return new GameState(null, null, null, null, true);
+    private GameState notOverState(Player currentPlayer, Player nextPlayer) {
+        return new GameState(ANY_CELLS, currentPlayer, nextPlayer, null, false);
+    }
+
+    private GameState gameOverState(Player currentPlayer, Player nextPlayer, Player winnerPlayer) {
+        return new GameState(ANY_CELLS, currentPlayer, nextPlayer, winnerPlayer, true);
     }
 }
